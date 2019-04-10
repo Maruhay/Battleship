@@ -5,29 +5,53 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Battleship extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+
+	private Game MyGame;
+	private EventListener MyEventListener;
+	private SpriteBatch Window;
+	private long Clock;
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+	public void create ( ) { // On start
+
+		MyGame = new Game();
+		MyEventListener = new EventListener();
+		Window = new SpriteBatch();
+		Clock = TimeUtils.millis(); }
+
+	@Override
+	public void render ( ) { // Main loop
+
+		// Process events
+		while ( MyEventListener.isEventAvailable() ) {
+
+			MyGame.process( MyEventListener.getEvent() ); }
+
+		// Get elapsed time
+		float ElapsedTime = 0;
+		Clock = TimeUtils.millis();
+
+		// Process
+		MyGame.process(ElapsedTime);
+
+		// Check finish condition
+		if ( MyGame.isFinished() ) {
+
+			Gdx.app.exit(); }
+
+		// Clear background
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
+
+		// Render
+		MyGame.render(Window); }
 	
 	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+	public void dispose ( ) { // On finish
+
+		Window.dispose(); }
+
 	}
-}
