@@ -3,7 +3,6 @@ package com.pio.battleship;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -31,7 +30,7 @@ public class Battleship extends ApplicationAdapter {
 			MyGame.process( MyEventListener.getEvent() ); }
 
 		// Get elapsed time
-		float ElapsedTime = 0;
+		float ElapsedTime = TimeUtils.timeSinceMillis( Clock ) / 1000.f;
 		Clock = TimeUtils.millis();
 
 		// Process
