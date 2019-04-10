@@ -13,6 +13,6 @@ public class SmallBoat implements ShipFactory {
 
     @Override
     public boolean isSunk() {
-        return true;
+        return false;
     }
 }
