@@ -6,8 +6,11 @@ import com.pio.battleship.Battleship;
 
 public class DesktopLauncher {
 
-	public static void main (String[] arg) {
+	public static void main ( String[] Args ) {
 
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		LwjglApplicationConfiguration Config = new LwjglApplicationConfiguration();
 
-		new LwjglApplication(new Battleship(), config); } }
+		Config.width = 800;
+		Config.height = 800;
+
+		new LwjglApplication( new Battleship(), Config ); } }

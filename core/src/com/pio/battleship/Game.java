@@ -1,6 +1,9 @@
 package com.pio.battleship;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import javafx.geometry.Pos;
 
 public class Game {
 
@@ -44,6 +47,8 @@ public class Game {
 
     public void render ( SpriteBatch Window ) {
 
+        Window.begin();
+
         switch ( State ) {
 
             case 0: renderShipChoice( Window, 0 ); break;
@@ -54,7 +59,9 @@ public class Game {
             case 5: renderFinishScreen( Window, 1 ); break;
             case 6: break;
 
-            default: System.out.println( "Unknown state at Game.render(SpriteBatch)" ); break; } }
+            default: System.out.println( "Unknown state at Game.render(SpriteBatch)" ); break; }
+
+        Window.end(); }
 
     public boolean isFinished ( ) {
 
@@ -84,7 +91,39 @@ public class Game {
 
         }
 
+    public void renderGrid ( SpriteBatch Window, int PositionX, int PositionY, int Width, int Height ) {
+
+        Window.end();
+
+        ShapeRenderer MyShapeRenderer = new ShapeRenderer();
+        MyShapeRenderer.setProjectionMatrix( Window.getProjectionMatrix() );
+
+        int FieldCount = 10;
+        int LineThickness = 3;
+        int FieldWidth = ( Width - LineThickness * FieldCount ) / FieldCount;
+        int FieldHeight = ( Height - LineThickness * FieldCount ) / FieldCount;
+
+        for ( int i = 0; i <= FieldCount; i++ ) {
+
+            int Vy = PositionY + ( LineThickness + FieldHeight ) * i;
+            int Hx = PositionX + ( LineThickness + FieldWidth ) * i;
+
+            MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            MyShapeRenderer.setColor(Color.RED);
+            MyShapeRenderer.rect( PositionX, Vy, Width, LineThickness );
+            MyShapeRenderer.end();
+
+            MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            MyShapeRenderer.setColor(Color.RED);
+            MyShapeRenderer.rect( Hx, PositionY, LineThickness, Height );
+            MyShapeRenderer.end(); }
+
+        Window.begin(); }
+
     public void renderShipChoice ( SpriteBatch Window, int Index ) {
+
+        //renderGrid(Window,25, 25, 750, 750);
+        renderGrid(Window,100, 100, 600, 600);
 
         }
 
