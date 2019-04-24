@@ -8,14 +8,12 @@ public class Game {
     // TODO private Player [] Players;
     // TODO private int [][] ShipChoice;
 
-    // TODO
     Game ( ) {
 
         State = 0;
 
         }
 
-    // TODO
     public void process ( Event MyEvent ) {
 
         switch ( State ) {
@@ -26,13 +24,11 @@ public class Game {
             case 3: updateGameplay( MyEvent, 1 ); break;
             case 4: updateFinishScreen( MyEvent, 0 ); break;
             case 5: updateFinishScreen( MyEvent, 1 ); break;
+            case 6: break;
 
-            default: System.out.println( "That's weird..." ); break; } }
+            default: System.out.println( "Unknown state at Game.process(Event)" ); break; } }
 
-    // TODO
     public void process ( float Time ) {
-
-        System.out.println(Time); // TODO TEMP Print elapsed time
 
         switch ( State ) {
 
@@ -42,10 +38,10 @@ public class Game {
             case 3: updateGameplay( Time, 1 ); break;
             case 4: updateFinishScreen( Time, 0 ); break;
             case 5: updateFinishScreen( Time, 1 ); break;
+            case 6: break;
 
-            default: System.out.println( "That's weird..." ); break; } }
+            default: System.out.println( "Unknown state at Game.process(Time)" ); break; } }
 
-    // TODO
     public void render ( SpriteBatch Window ) {
 
         switch ( State ) {
@@ -56,57 +52,46 @@ public class Game {
             case 3: renderGameplay( Window, 1 ); break;
             case 4: renderFinishScreen( Window, 0 ); break;
             case 5: renderFinishScreen( Window, 1 ); break;
+            case 6: break;
 
-            default: System.out.println( "That's weird..." ); break; } }
+            default: System.out.println( "Unknown state at Game.render(SpriteBatch)" ); break; } }
 
-    // TODO
     public boolean isFinished ( ) {
 
-        return false;
+        return State > 5; }
 
-        }
-
-    // TODO
     public void updateShipChoice ( Event MyEvent, int Index ) {
 
         }
 
-    // TODO
     public void updateGameplay ( Event MyEvent, int Index ) {
 
         }
 
-    // TODO
     public void updateFinishScreen ( Event MyEvent, int Index ) {
 
         }
 
-    // TODO
     public void updateShipChoice ( float Time, int Index ) {
 
         }
 
-    // TODO
     public void updateGameplay ( float Time, int Index ) {
 
         }
 
-    // TODO
     public void updateFinishScreen ( float Time, int Index ) {
 
         }
 
-    // TODO
     public void renderShipChoice ( SpriteBatch Window, int Index ) {
 
         }
 
-    // TODO
     public void renderGameplay ( SpriteBatch Window, int Index ) {
 
         }
 
-    // TODO
     public void renderFinishScreen ( SpriteBatch Window, int Index ) {
 
         }

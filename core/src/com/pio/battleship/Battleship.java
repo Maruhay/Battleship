@@ -19,7 +19,9 @@ public class Battleship extends ApplicationAdapter {
 		MyGame = new Game();
 		MyEventListener = new EventListener();
 		Window = new SpriteBatch();
-		Clock = TimeUtils.millis(); }
+		Clock = TimeUtils.millis();
+
+		Gdx.input.setInputProcessor(MyEventListener); }
 
 	@Override
 	public void render ( ) { // Main loop

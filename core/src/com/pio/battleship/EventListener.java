@@ -1,63 +1,98 @@
 package com.pio.battleship;
 
 import com.badlogic.gdx.InputProcessor;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class EventListener implements InputProcessor {
 
-    // TODO EVENT BUFFER
+    private Queue EventQueue = new LinkedList ( );
 
-    // TODO
     public boolean isEventAvailable ( ) {
 
-        return false;
+        return !EventQueue.isEmpty(); }
 
-        }
-
-    // TODO
     public Event getEvent ( ) {
 
-        return new Event();
+        return (Event) EventQueue.poll(); }
 
-        }
+    public boolean keyDown ( int keycode ) {
 
-    // TODO
-    public boolean keyDown (int keycode) {
+        Event MyEvent = new Event();
 
-        return false;
+        MyEvent.Type = Event.EventType.KeyPressed;
+        MyEvent.Code = keycode;
 
-        }
+        EventQueue.add( MyEvent );
 
-    // TODO
-    public boolean keyUp (int keycode) {
+        return true; }
 
-        return false;
+    public boolean keyUp ( int keycode ) {
 
-        }
+        Event MyEvent = new Event();
 
-    // TODO
-    public boolean keyTyped (char character) {
+        MyEvent.Type = Event.EventType.KeyReleased;
+        MyEvent.Code = keycode;
 
-        return false;
+        EventQueue.add( MyEvent );
 
-        }
+        return true; }
 
-    public boolean touchDown (int x, int y, int pointer, int button) {
-
-        return false; }
-
-    public boolean touchUp (int x, int y, int pointer, int button) {
+    public boolean keyTyped ( char character ) {
 
         return false; }
 
-    public boolean touchDragged (int x, int y, int pointer) {
+    public boolean touchDown ( int x, int y, int pointer, int button ) {
+
+        Event MyEvent = new Event();
+
+        MyEvent.Type = Event.EventType.MouseKeyPressed;
+        MyEvent.Code = button;
+        MyEvent.PositionX = x;
+        MyEvent.PositionY = y;
+
+        EventQueue.add( MyEvent );
 
         return false; }
 
-    public boolean mouseMoved (int x, int y) {
+    public boolean touchUp ( int x, int y, int pointer, int button ) {
 
-        return false; }
+        Event MyEvent = new Event();
 
-    public boolean scrolled (int amount) {
+        MyEvent.Type = Event.EventType.MouseKeyReleased;
+        MyEvent.Code = button;
+        MyEvent.PositionX = x;
+        MyEvent.PositionY = y;
+
+        EventQueue.add( MyEvent );
+
+        return true; }
+
+    public boolean touchDragged ( int x, int y, int pointer ) {
+
+        Event MyEvent = new Event();
+
+        MyEvent.Type = Event.EventType.MouseMoved;
+        MyEvent.PositionX = x;
+        MyEvent.PositionY = y;
+
+        EventQueue.add( MyEvent );
+
+        return true; }
+
+    public boolean mouseMoved ( int x, int y ) {
+
+        Event MyEvent = new Event();
+
+        MyEvent.Type = Event.EventType.MouseMoved;
+        MyEvent.PositionX = x;
+        MyEvent.PositionY = y;
+
+        EventQueue.add( MyEvent );
+
+        return true; }
+
+    public boolean scrolled ( int amount ) {
 
         return false; }
 
