@@ -7,7 +7,7 @@ public class AircraftCarrier implements ShipFactory{
     private Deck[] decks = new Deck[4];
 
     @Override
-    public int pick(Cordinate cordinate,boolean shadow) {
+    public int pick(Coordinates coordinates, boolean shadow) {
         return 0;
     }
 

@@ -6,7 +6,7 @@ public class Board {
     private boolean[][] grid = new boolean[width][height];
     private ShipFactory[] ships ;
 
-    public int pick(Cordinate cordinate){
+    public int pick(Coordinates coordinates){
         return 1;
     }
     public void addShip(ShipFactory shipFactory,boolean shadow){

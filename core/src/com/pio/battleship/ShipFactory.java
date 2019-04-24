@@ -1,7 +1,7 @@
 package com.pio.battleship;
 
 public interface ShipFactory {
-     int pick(Cordinate cordinate,boolean shadow);
+     int pick(Coordinates coordinates, boolean shadow);
      boolean isSunk();
 
 }

@@ -1,7 +1,8 @@
 package com.pio.battleship;
 
 public class Deck {
-    private Cordinate cordinates;
-    private boolean sunk;
 
-}
+    public Coordinates Coordinates;
+    public boolean Sunk = false;
+
+    }

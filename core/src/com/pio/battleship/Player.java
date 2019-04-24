@@ -6,7 +6,7 @@ public class Player {
     private Color color;
     private Board myBoard;
 
-    public Cordinate update(){return null;}
+    public Coordinates update(){return null;}
 
     public Board getBoard() {
         return myBoard;
