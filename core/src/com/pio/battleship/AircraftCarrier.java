@@ -2,7 +2,7 @@ package com.pio.battleship;
 
 import com.badlogic.gdx.graphics.Color;
 
-public class AircraftCarrier implements ShipFactory{
+public class AircraftCarrier implements Ship{
     private Color color;
     private Deck[] decks = new Deck[4];
 
