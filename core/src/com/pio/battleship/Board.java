@@ -10,7 +10,29 @@ public class Board {
         return 1;
     }
     public void addShip(ShipFactory shipFactory,boolean shadow){
-
+        int row = ship.getRow();
+        int col = ship.getCol();
+        int dir = ship.getDirection();
+        
+        
+        if (dir == 0) 
+        {
+            for (int i = col; i < col+length; i++)
+            {
+               
+                grid[row][i].setShip(true);
+             
+            }
+        }
+        else if (dir == 1) // Vertical
+        {
+            for (int i = row; i < row+length; i++)
+            {
+                
+                grid[i][col].setShip(true);
+              
+            }
+        }
     }
     public boolean isAllSunk(){
         return true;
