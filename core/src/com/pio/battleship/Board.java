@@ -10,9 +10,9 @@ public class Board {
         return 1;
     }
     public void addShip(ShipFactory shipFactory,boolean shadow){
-        int row = ship.getRow();
-        int col = ship.getCol();
-        int dir = ship.getDirection();
+        int row = ship.getRow();//n
+        int col = ship.getCol();//n
+        int dir = ship.getDirection();//n
         
         
         if (dir == 0) 
