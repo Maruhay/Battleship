@@ -1,7 +1,9 @@
 package com.pio.battleship;
 
-public interface ShipFactory {
-     int pick(Coordinates coordinates, boolean shadow);
-     boolean isSunk();
+import com.badlogic.gdx.graphics.Color;
 
-}
+public abstract class ShipFactory {
+
+     abstract Ship getShip ( Coordinates ShipBegin, Coordinates ShipEnd, Color ShipColor );
+
+     }
