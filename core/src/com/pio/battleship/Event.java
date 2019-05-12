@@ -12,9 +12,16 @@ public class Event {
 
         }
 
-    public EventType Type = EventType.KeyPressed;
-    public int Code = 0;
-    public int PositionX = 0;
-    public int PositionY = 0;
+    public EventType Type;
+    public int Code;
+    public int PositionX;
+    public int PositionY;
+
+    Event ( ) {
+
+        Type = EventType.KeyPressed;
+        Code = 0;
+        PositionX = 0;
+        PositionY = 0; }
 
     }

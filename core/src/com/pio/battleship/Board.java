@@ -6,8 +6,13 @@ public class Board {
 
     private int width;
     private int height;
-    public int [][] grid;
     private LinkedList <Ship> ships;
+
+    // valid values:
+    // 0 - not picked
+    // 1 - picked and missed
+    // 2 - picked and hit
+    public int [][] grid;
 
     Board ( int width, int height ) {
 
@@ -32,7 +37,7 @@ public class Board {
 
     // shadow: don't update grid's and ship's state
     // return:
-    // 0 - invalid action
+    // 0 - invalid
     // 1 - missed
     // 2 - hit
     // 3 - hit and sunk

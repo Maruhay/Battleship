@@ -17,13 +17,45 @@ public class AircraftCarrier implements Ship {
             decks[i] = new Deck ( );
             decks[i].coordinates = coordinates[i]; } }
 
+    // shadow: don't update ship state
+    // return:
+    // 1 - missed
+    // 2 - hit
+    // 3 - hit and sunk
     @Override
-    public int pick( Coordinates coordinates, boolean shadow ) {
-        return 0;
-    }
+    public int pick ( Coordinates coordinates, boolean shadow ) {
+
+        int result = 1;
+
+        for ( Deck deck : decks ) {
+
+            if ( coordinates.getX() == deck.coordinates.getX() && coordinates.getY() == deck.coordinates.getY() ) {
+
+                if ( !shadow ) {
+
+                    deck.sunk = true; }
+
+                if ( isSunk() ) {
+
+                    result = 3; }
+
+                else {
+
+                    result = 2; }
+
+                break; } }
+
+        return result; }
 
     @Override
-    public boolean isSunk() {
-        return false;
+    public boolean isSunk ( ) {
+
+        for ( Deck deck : decks ) {
+
+            if ( !deck.sunk ) {
+
+                return false; } }
+
+        return true; }
+
     }
-}

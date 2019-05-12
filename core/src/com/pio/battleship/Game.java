@@ -234,7 +234,7 @@ public class Game {
                         ship = factory.getShip( ShipBegin, ShipEnd, Players[Index].getColor() );
                         Players[Index].getBoard().addShip( ship );
                         ShipCount[Index][ length - 1 ]++;
-                        ShipCount[Index][ MaxShipLength + 1 ]++; }
+                        ShipCount[Index][MaxShipLength]++; }
 
                     ShipBegin = null;
                     ShipEnd = null; } } }
@@ -253,7 +253,7 @@ public class Game {
     public void updateGameplay ( Event MyEvent, int Index ) {
 
         // TODO THIS
-        // TODO DECREASE ShipCount[Index][ MaxShipLength + 1 ] ON HIT AND SUNK (3)
+        // TODO DECREASE ShipCount[Index][MaxShipLength] ON HIT AND SUNK (3)
 
         }
 
