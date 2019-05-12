@@ -18,7 +18,7 @@ public class AircraftCarrier implements Ship {
             decks[i].coordinates = coordinates[i]; } }
 
     @Override
-    public int pick(Coordinates coordinates, boolean shadow) {
+    public int pick( Coordinates coordinates, boolean shadow ) {
         return 0;
     }
 

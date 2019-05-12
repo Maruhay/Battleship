@@ -8,7 +8,9 @@ public class Game {
 
     private int State;
     private Player [] Players;
-    private int [][] ShipChoice;
+    private int MaxShipLength;
+    private int [][] ShipCount;
+    private int [] MaxShipCount;
     private Coordinates ShipBegin;
     private Coordinates ShipEnd;
 
@@ -18,11 +20,26 @@ public class Game {
         Players = new Player [2];
         Players[0] = new Player ( Color.GREEN );
         Players[1] = new Player ( Color.BLUE );
-        // TODO ShipChoice
+        MaxShipLength = 4;
+        ShipCount = new int [2][];
+        ShipCount[0] = new int [MaxShipLength];
+        ShipCount[1] = new int [MaxShipLength];
+        MaxShipCount = new int [MaxShipLength];
+
         ShipBegin = null;
         ShipEnd = null;
 
-        }
+        for ( int i = 0; i < 2; i++ ) {
+
+            for ( int j = 0; j < MaxShipLength; j++ ) {
+
+                ShipCount[i][j] = 0;
+                MaxShipCount[j] = 0; } }
+
+        MaxShipCount[0] = 1;
+        MaxShipCount[1] = 1;
+        MaxShipCount[2] = 1;
+        MaxShipCount[3] = 1; }
 
     public void process ( Event MyEvent ) {
 
@@ -169,14 +186,13 @@ public class Game {
 
                         allowed = false; }
 
-                    // TODO TEMP
-                    System.out.println(length);
-
-                    if ( length > 4 ) {
+                    if ( length > MaxShipLength ) {
 
                         allowed = false; }
 
-                    // TODO check ship length with ShipChoice
+                    else if ( ShipCount[Index][ length - 1 ] == MaxShipCount[ length - 1 ] ) {
+
+                        allowed = false; }
 
                     if ( allowed ) {
 
@@ -216,11 +232,7 @@ public class Game {
 
                         ship = factory.getShip( ShipBegin, ShipEnd, Players[Index].getColor() );
                         Players[Index].getBoard().addShip( ship );
-
-                        System.out.println("ADD SHIP");
-                        // TODO UPDATE ShipChoice
-
-                        }
+                        ShipCount[Index][ length - 1 ]++; }
 
                     ShipBegin = null;
                     ShipEnd = null; } } }
@@ -238,15 +250,35 @@ public class Game {
 
     public void updateGameplay ( Event MyEvent, int Index ) {
 
+        // TODO
+
         }
 
     public void updateFinishScreen ( Event MyEvent, int Index ) {
+
+        // TODO
 
         }
 
     public void updateShipChoice ( float Time, int Index ) {
 
-        // TODO CHECK IF ALL SHIPS HAVE BEEN PLACED
+        boolean AllShipsPlaced = true;
+
+        for ( int i = 0; i < MaxShipLength; i++ ) {
+
+            if ( ShipCount[Index][i] != MaxShipCount[i] ) {
+
+                AllShipsPlaced = false;
+
+                break; } }
+
+        if ( AllShipsPlaced ) {
+
+            State++;
+
+            return; }
+
+        // ...
 
         }
 
@@ -258,11 +290,13 @@ public class Game {
 
             return; }
 
-        // TODO
+        // ...
 
         }
 
     public void updateFinishScreen ( float Time, int Index ) {
+
+        // TODO
 
         }
 
@@ -285,12 +319,12 @@ public class Game {
 
             MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             MyShapeRenderer.setColor(color);
-            MyShapeRenderer.rect( PositionX, Vy, Width, LineThickness );
+            MyShapeRenderer.rect( PositionX, Vy, Width + LineThickness, LineThickness );
             MyShapeRenderer.end();
 
             MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             MyShapeRenderer.setColor(color);
-            MyShapeRenderer.rect( Hx, PositionY, LineThickness, Height );
+            MyShapeRenderer.rect( Hx, PositionY, LineThickness, Height + LineThickness );
             MyShapeRenderer.end(); }
 
         Window.begin(); }
@@ -322,6 +356,16 @@ public class Game {
 
         renderGrid( Window, 100, 100, 600, 600, Players[Index].getColor() );
 
+        Board board = Players[Index].getBoard();
+
+        for ( int x = 0; x < 10; x ++ ) {
+
+            for ( int y = 0; y < 10; y++ ) {
+
+                if( board.grid[x][y] ) {
+
+                    renderDot( Window, x, y, Players[Index].getColor(), 100, 100, 600, 600 ); } } }
+
         if ( ShipBegin != null ) {
 
             renderDot( Window, ShipBegin.getX(), ShipBegin.getY(), Color.WHITE, 100, 100, 600, 600 );
@@ -348,28 +392,19 @@ public class Game {
 
                     it += Direction; } } }
 
-        Board board = Players[Index].getBoard();
-
-        for ( int x = 0; x < 10; x ++ ) {
-
-            for ( int y = 0; y < 10; y++ ) {
-
-                if( board.grid[x][y] ) {
-
-                    renderDot( Window, x, y, Players[Index].getColor(), 100, 100, 600, 600 );
-
-                    } } }
-
-        // TODO RENDER ALREADY PLACED SHIPS AS DOTS
-        // TODO RENDER LEFT SHIP OPTIONS
+        // TODO RENDER HOW MANY MORE SHIPS HAVE TO BE PLACED
 
         }
 
     public void renderGameplay ( SpriteBatch Window, int Index ) {
 
+        // TODO
+
         }
 
     public void renderFinishScreen ( SpriteBatch Window, int Index ) {
+
+        // TODO
 
         }
 

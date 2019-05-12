@@ -66,34 +66,7 @@ public class Board {
 
     public void addShip ( Ship ship ) {
 
-        ships.add( ship );
-
-        /*
-        int row = ship.getRow();//n
-        int col = ship.getCol();//n
-        int dir = ship.getDirection();//n
-        
-        
-        if (dir == 0) 
-        {
-            for (int i = col; i < col+length; i++)
-            {
-               
-                grid[row][i].setShip(true);
-             
-            }
-        }
-        else if (dir == 1) // Vertical
-        {
-            for (int i = row; i < row+length; i++)
-            {
-                
-                grid[i][col].setShip(true);
-              
-            }
-        }*/
-
-        }
+        ships.add( ship ); }
 
     public boolean areAllShipsSunk ( ){
 
