@@ -3,12 +3,25 @@ package com.pio.battleship;
 import com.badlogic.gdx.graphics.Color;
 
 public class Player {
+
     private Color color;
-    private Board myBoard;
+    private Board board;
 
-    public Coordinates update(){return null;}
+    Player ( Color color ) {
 
-    public Board getBoard() {
-        return myBoard;
+        this.color = color;
+        board = new Board ( 10, 10 ); }
+
+    public Color getColor ( ) {
+
+        return color; }
+
+    public Board getBoard ( ) {
+
+        return board; }
+
+    public Coordinates update ( ) { // TODO WHAT IS IT ???
+
+        return null; }
+
     }
-}

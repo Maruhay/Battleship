@@ -2,7 +2,7 @@ package com.pio.battleship;
 
 public class Deck {
 
-    public Coordinates Coordinates;
-    public boolean Sunk = false;
+    public Coordinates coordinates = new Coordinates ( );
+    public boolean sunk = false;
 
     }

@@ -6,7 +6,7 @@ import java.util.Queue;
 
 public class EventListener implements InputProcessor {
 
-    private Queue EventQueue = new LinkedList ( );
+    private Queue EventQueue = new LinkedList( ); // TODO ArrayDeque
 
     public boolean isEventAvailable ( ) {
 

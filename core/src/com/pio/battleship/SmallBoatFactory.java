@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 
 public class SmallBoatFactory extends ShipFactory {
 
-    Ship getShip ( Coordinates ShipBegin, Coordinates ShipEnd, Color ShipColor ) {
+    Ship getShip ( Coordinates shipBegin, Coordinates shipEnd, Color shipColor ) {
 
-        // TODO
-
-        return null; }
+        return new SmallBoat( shipBegin, shipColor ); }
 
     }

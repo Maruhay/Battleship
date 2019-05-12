@@ -4,6 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 
 public abstract class ShipFactory {
 
-     abstract Ship getShip ( Coordinates ShipBegin, Coordinates ShipEnd, Color ShipColor );
+     abstract Ship getShip ( Coordinates shipBegin, Coordinates shipEnd, Color shipColor );
 
      }

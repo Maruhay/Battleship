@@ -16,6 +16,8 @@ public class Game {
 
         State = 0;
         Players = new Player [2];
+        Players[0] = new Player ( Color.GREEN );
+        Players[1] = new Player ( Color.BLUE );
         // TODO ShipChoice
         ShipBegin = null;
         ShipEnd = null;
@@ -112,7 +114,113 @@ public class Game {
 
                 else {
 
-                    /// TODO PASS TO BOARD OR STH
+                    boolean allowed = true;
+                    int length = 1;
+
+                    Coordinates coordinates = new Coordinates();
+                    coordinates.setX( ShipBegin.getX() );
+                    coordinates.setY( ShipBegin.getY() );
+
+                    if ( Players[Index].getBoard().pick( coordinates, true ) == 1 ) {
+
+                        if ( ShipEnd.getY() == ShipBegin.getY() ) {
+
+                            int Direction = Math.min( Math.max( ShipBegin.getX() - ShipEnd.getX(), -1 ), 1 );
+                            int it = ShipEnd.getX();
+
+                            while ( it != ShipBegin.getX() ) {
+
+                                coordinates.setX( it );
+                                coordinates.setY( ShipBegin.getY() );
+
+                                if ( Players[Index].getBoard().pick( coordinates, true ) != 1 ) {
+
+                                    allowed = false;
+
+                                    break; }
+
+                                length++;
+                                it += Direction; } }
+
+                        else if ( ShipEnd.getX() == ShipBegin.getX() ) {
+
+                            int Direction = Math.min( Math.max( ShipBegin.getY() - ShipEnd.getY(), -1 ), 1 );
+                            int it = ShipEnd.getY();
+
+                            while ( it != ShipBegin.getY() ) {
+
+                                coordinates.setX( ShipBegin.getX() );
+                                coordinates.setY( it );
+
+                                if ( Players[Index].getBoard().pick( coordinates, true ) != 1 ) {
+
+                                    allowed = false;
+
+                                    break; }
+
+                                length++;
+                                it += Direction; } }
+
+                        else {
+
+                            allowed = false; } }
+
+                    else {
+
+                        allowed = false; }
+
+                    // TODO TEMP
+                    System.out.println(length);
+
+                    if ( length > 4 ) {
+
+                        allowed = false; }
+
+                    // TODO check ship length with ShipChoice
+
+                    if ( allowed ) {
+
+                        Board board = Players[Index].getBoard();
+
+                        if ( ShipEnd.getY() == ShipBegin.getY() ) {
+
+                            int Direction = Math.min( Math.max( ShipBegin.getX() - ShipEnd.getX(), -1 ), 1 );
+
+                            for ( int i = 0; i < length; i++ ) {
+
+                                coordinates.setX( ShipEnd.getX() + Direction * i );
+                                coordinates.setY( ShipEnd.getY() );
+                                board.pick( coordinates ); } }
+
+                        else if ( ShipEnd.getX() == ShipBegin.getX() ) {
+
+                            int Direction = Math.min( Math.max( ShipBegin.getY() - ShipEnd.getY(), -1 ), 1 );
+
+                            for ( int i = 0; i < length; i++ ) {
+
+                                coordinates.setX( ShipEnd.getX() );
+                                coordinates.setY( ShipEnd.getY() + Direction * i );
+                                board.pick( coordinates ); } }
+
+                        Ship ship;
+                        ShipFactory factory;
+
+                        switch ( length ) {
+
+                            case 1: factory = ShipProducer.getFactory( ShipProducer.FactoryType.SmallBoatFactory ); break;
+                            case 2: factory = ShipProducer.getFactory( ShipProducer.FactoryType.CorvetteFactory ); break;
+                            case 3: factory = ShipProducer.getFactory( ShipProducer.FactoryType.DestroyerFactory ); break;
+                            case 4: factory = ShipProducer.getFactory( ShipProducer.FactoryType.AircraftCarrierFactory ); break;
+
+                            default: factory = null; break; }
+
+                        ship = factory.getShip( ShipBegin, ShipEnd, Players[Index].getColor() );
+                        Players[Index].getBoard().addShip( ship );
+
+                        System.out.println("ADD SHIP");
+                        // TODO UPDATE ShipChoice
+
+                        }
 
                     ShipBegin = null;
                     ShipEnd = null; } } }
@@ -144,7 +252,7 @@ public class Game {
 
     public void updateGameplay ( float Time, int Index ) {
 
-        if ( Players[Index].getBoard().isAllSunk() ) {
+        if ( Players[Index].getBoard().areAllShipsSunk() ) {
 
             State = 4 + Index;
 
@@ -158,7 +266,7 @@ public class Game {
 
         }
 
-    public void renderGrid ( SpriteBatch Window, int PositionX, int PositionY, int Width, int Height ) {
+    public void renderGrid ( SpriteBatch Window, int PositionX, int PositionY, int Width, int Height, Color color ) {
 
         Window.end();
 
@@ -176,18 +284,18 @@ public class Game {
             int Hx = PositionX + ( LineThickness + FieldWidth ) * i;
 
             MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            MyShapeRenderer.setColor(Color.RED);
+            MyShapeRenderer.setColor(color);
             MyShapeRenderer.rect( PositionX, Vy, Width, LineThickness );
             MyShapeRenderer.end();
 
             MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            MyShapeRenderer.setColor(Color.RED);
+            MyShapeRenderer.setColor(color);
             MyShapeRenderer.rect( Hx, PositionY, LineThickness, Height );
             MyShapeRenderer.end(); }
 
         Window.begin(); }
 
-    public void renderDot ( SpriteBatch Window, int PositionX, int PositionY, int GridX, int GridY, int GridWidth, int GridHeight ) {
+    public void renderDot ( SpriteBatch Window, int PositionX, int PositionY, Color color, int GridX, int GridY, int GridWidth, int GridHeight ) {
 
         Window.end();
 
@@ -202,7 +310,7 @@ public class Game {
         PositionY = Math.abs( 9 - PositionY );
 
         MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        MyShapeRenderer.setColor(Color.RED);
+        MyShapeRenderer.setColor(color);
         MyShapeRenderer.circle( GridX + LineThickness + ( LineThickness + FieldWidth ) * PositionX + FieldWidth / 2,
                                 GridY + LineThickness + ( LineThickness + FieldWidth ) * PositionY + FieldHeight / 2,
                                 DotRadius );
@@ -212,35 +320,48 @@ public class Game {
 
     public void renderShipChoice ( SpriteBatch Window, int Index ) {
 
-        renderGrid( Window, 100, 100, 600, 600 );
+        renderGrid( Window, 100, 100, 600, 600, Players[Index].getColor() );
 
         if ( ShipBegin != null ) {
 
-            renderDot( Window, ShipBegin.getX(), ShipBegin.getY(), 100, 100, 600, 600 );
+            renderDot( Window, ShipBegin.getX(), ShipBegin.getY(), Color.WHITE, 100, 100, 600, 600 );
 
             if ( ShipEnd.getY() == ShipBegin.getY() ) {
 
                 int Direction = Math.min( Math.max( ShipBegin.getX() - ShipEnd.getX(), -1 ), 1 );
-                int Iterator = ShipEnd.getX();
+                int it = ShipEnd.getX();
 
-                while ( Iterator != ShipBegin.getX() ) {
+                while ( it != ShipBegin.getX() ) {
 
-                    renderDot( Window, Iterator, ShipBegin.getY(), 100, 100, 600, 600 );
+                    renderDot( Window, it, ShipBegin.getY(), Color.WHITE, 100, 100, 600, 600 );
 
-                    Iterator += Direction; } }
+                    it += Direction; } }
 
             else if ( ShipEnd.getX() == ShipBegin.getX() ) {
 
                 int Direction = Math.min( Math.max( ShipBegin.getY() - ShipEnd.getY(), -1 ), 1 );
-                int Iterator = ShipEnd.getY();
+                int it = ShipEnd.getY();
 
-                while ( Iterator != ShipBegin.getY() ) {
+                while ( it != ShipBegin.getY() ) {
 
-                    renderDot( Window, ShipBegin.getX(), Iterator, 100, 100, 600, 600 );
+                    renderDot( Window, ShipBegin.getX(), it, Color.WHITE, 100, 100, 600, 600 );
 
-                    Iterator += Direction; } } }
+                    it += Direction; } } }
 
-        // TODO RENDER ALREADY PLACED SHIPS
+        Board board = Players[Index].getBoard();
+
+        for ( int x = 0; x < 10; x ++ ) {
+
+            for ( int y = 0; y < 10; y++ ) {
+
+                if( board.grid[x][y] ) {
+
+                    renderDot( Window, x, y, Players[Index].getColor(), 100, 100, 600, 600 );
+
+                    } } }
+
+        // TODO RENDER ALREADY PLACED SHIPS AS DOTS
+        // TODO RENDER LEFT SHIP OPTIONS
 
         }
 
