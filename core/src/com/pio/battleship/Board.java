@@ -6,8 +6,8 @@ public class Board {
 
     private int width;
     private int height;
-    public boolean [][] grid;
-    private LinkedList <Ship> ships ;
+    public int [][] grid;
+    private LinkedList <Ship> ships;
 
     Board ( int width, int height ) {
 
@@ -16,7 +16,7 @@ public class Board {
 
         if ( width > 0 && height > 0 ) {
 
-            grid = new boolean [width][height];
+            grid = new int [width][height];
 
             clear(); }
 
@@ -28,7 +28,7 @@ public class Board {
 
             for ( int y = 0; y < height; y++ ) {
 
-                grid[x][y] = false; } } }
+                grid[x][y] = 0; } } }
 
     // shadow: don't update grid's and ship's state
     // return:
@@ -42,19 +42,21 @@ public class Board {
 
             return 0; }
 
-        if ( grid[coordinates.getX()][coordinates.getY()] ) {
+        if ( grid[coordinates.getX()][coordinates.getY()] > 0 ) {
 
             return 0; }
 
         if ( !shadow ) {
 
-            grid[coordinates.getX()][coordinates.getY()] = true; }
+            grid[coordinates.getX()][coordinates.getY()] = 1; }
 
         for ( Ship ship : ships ) {
 
             int test = ship.pick( coordinates, shadow );
 
             if ( test > 1 ) {
+
+                grid[coordinates.getX()][coordinates.getY()] = 2;
 
                 return test; } }
 

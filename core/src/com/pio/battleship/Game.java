@@ -22,10 +22,11 @@ public class Game {
         Players[1] = new Player ( Color.BLUE );
         MaxShipLength = 4;
         ShipCount = new int [2][];
-        ShipCount[0] = new int [MaxShipLength];
-        ShipCount[1] = new int [MaxShipLength];
+        ShipCount[0] = new int [ MaxShipLength + 1 ];
+        ShipCount[1] = new int [ MaxShipLength + 1 ];
+        ShipCount[0][MaxShipLength] = 0;
+        ShipCount[1][MaxShipLength] = 0;
         MaxShipCount = new int [MaxShipLength];
-
         ShipBegin = null;
         ShipEnd = null;
 
@@ -47,10 +48,10 @@ public class Game {
 
             case 0: updateShipChoice( MyEvent, 0 ); break;
             case 1: updateShipChoice( MyEvent, 1 ); break;
-            case 2: updateGameplay( MyEvent, 0 ); break;
-            case 3: updateGameplay( MyEvent, 1 ); break;
-            case 4: updateFinishScreen( MyEvent, 1 ); break;
-            case 5: updateFinishScreen( MyEvent, 0 ); break;
+            case 2: updateGameplay( MyEvent, 1 ); break;
+            case 3: updateGameplay( MyEvent, 0 ); break;
+            case 4: updateFinishScreen( MyEvent, 0 ); break;
+            case 5: updateFinishScreen( MyEvent, 1 ); break;
             case 6: break;
 
             default: System.out.println( "Unknown state at Game.process(Event)" ); break; } }
@@ -61,10 +62,10 @@ public class Game {
 
             case 0: updateShipChoice( Time, 0 ); break;
             case 1: updateShipChoice( Time, 1 ); break;
-            case 2: updateGameplay( Time, 0 ); break;
-            case 3: updateGameplay( Time, 1 ); break;
-            case 4: updateFinishScreen( Time, 1 ); break;
-            case 5: updateFinishScreen( Time, 0 ); break;
+            case 2: updateGameplay( Time, 1 ); break;
+            case 3: updateGameplay( Time, 0 ); break;
+            case 4: updateFinishScreen( Time, 0 ); break;
+            case 5: updateFinishScreen( Time, 1 ); break;
             case 6: break;
 
             default: System.out.println( "Unknown state at Game.process(Time)" ); break; } }
@@ -77,8 +78,8 @@ public class Game {
 
             case 0: renderShipChoice( Window, 0 ); break;
             case 1: renderShipChoice( Window, 1 ); break;
-            case 2: renderGameplay( Window, 0 ); break;
-            case 3: renderGameplay( Window, 1 ); break;
+            case 2: renderGameplay( Window, 1 ); break;
+            case 3: renderGameplay( Window, 0 ); break;
             case 4: renderFinishScreen( Window, 1 ); break;
             case 5: renderFinishScreen( Window, 0 ); break;
             case 6: break;
@@ -232,7 +233,8 @@ public class Game {
 
                         ship = factory.getShip( ShipBegin, ShipEnd, Players[Index].getColor() );
                         Players[Index].getBoard().addShip( ship );
-                        ShipCount[Index][ length - 1 ]++; }
+                        ShipCount[Index][ length - 1 ]++;
+                        ShipCount[Index][ MaxShipLength + 1 ]++; }
 
                     ShipBegin = null;
                     ShipEnd = null; } } }
@@ -250,13 +252,15 @@ public class Game {
 
     public void updateGameplay ( Event MyEvent, int Index ) {
 
-        // TODO
+        // TODO THIS
+        // TODO DECREASE ShipCount[Index][ MaxShipLength + 1 ] ON HIT AND SUNK (3)
 
         }
 
     public void updateFinishScreen ( Event MyEvent, int Index ) {
 
-        // TODO
+        // TODO THIS
+        // TODO CLOSE ON ANY KEY (State=6)
 
         }
 
@@ -274,29 +278,24 @@ public class Game {
 
         if ( AllShipsPlaced ) {
 
+            Players[Index].getBoard().clear();
             State++;
 
-            return; }
-
-        // ...
-
-        }
+            return; } }
 
     public void updateGameplay ( float Time, int Index ) {
 
-        if ( Players[Index].getBoard().areAllShipsSunk() ) {
+        int EnemyIndex = ( Index == 0 ) ? 1 : 0;
+
+        if ( Players[EnemyIndex].getBoard().areAllShipsSunk() ) {
 
             State = 4 + Index;
 
-            return; }
-
-        // ...
-
-        }
+            return; } }
 
     public void updateFinishScreen ( float Time, int Index ) {
 
-        // TODO
+        // TODO I GUESS NOTHING ?
 
         }
 
@@ -362,7 +361,7 @@ public class Game {
 
             for ( int y = 0; y < 10; y++ ) {
 
-                if( board.grid[x][y] ) {
+                if( board.grid[x][y] > 0 ) {
 
                     renderDot( Window, x, y, Players[Index].getColor(), 100, 100, 600, 600 ); } } }
 
@@ -398,7 +397,28 @@ public class Game {
 
     public void renderGameplay ( SpriteBatch Window, int Index ) {
 
-        // TODO
+        int EnemyIndex = ( Index == 0 ) ? 1 : 0;
+        Board board = Players[EnemyIndex].getBoard();
+
+        // TODO RENDER INFORMATION IF HIT / HIT AND SUNK (INDEX INDEPENDENT)
+
+        renderGrid( Window, 100, 100, 600, 600, Players[EnemyIndex].getColor() );
+
+        for ( int x = 0; x < 10; x ++ ) {
+
+            for ( int y = 0; y < 10; y++ ) {
+
+                if ( board.grid[x][y] > 0 ) {
+
+                    Color color = Players[Index].getColor();
+
+                    if ( board.grid[x][y] > 1 ) {
+
+                        color = Color.RED; }
+
+                    renderDot( Window, x, y, color, 100, 100, 600, 600 ); } } }
+
+        // TODO RENDER HOW MANY MORE SHIPS HAVE TO BE SUNK (LAST INDEX OF SHIP COUNT)
 
         }
 
