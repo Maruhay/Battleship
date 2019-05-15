@@ -337,12 +337,13 @@ public class Game {
 
         // TODO THIS
         // TODO DECREASE ShipCount[Index][MaxShipLength] ON HIT AND SUNK (3)
-
+        //
     }
 
     public void updateFinishScreen(Event MyEvent, int Index) {
 
         // TODO THIS
+        // TODO THIS 2
         // TODO CLOSE ON ANY KEY (State=6)
 
     }
@@ -428,7 +429,7 @@ public class Game {
         int FieldCount = 10;
         int LineThickness = 3;
         int FieldWidth = (GridWidth - LineThickness * FieldCount) / FieldCount;
-        int FieldHeight = (GridHeight - LineThickness * FieldCount) / FieldCount;
+        int FieldHeight = (GridHeight - LineThickness * FieldCount) / FieldCount; ;
         int DotRadius = (int) (0.25f * Math.min(FieldWidth, FieldHeight));
         PositionY = Math.abs(9 - PositionY);
 
