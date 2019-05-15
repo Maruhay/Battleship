@@ -492,11 +492,19 @@ public class Game {
         }
 
         BitmapFont font = new BitmapFont();
-        font.draw(Window, "One deck ships left  " + (MaxShipCount[0] - ShipCount[Index][0]), 20, 90);
-        font.draw(Window, "Two deck ships left  " + (MaxShipCount[1] - ShipCount[Index][1]), 20, 70);
-        font.draw(Window, "Three deck ships left  " + (MaxShipCount[2] - ShipCount[Index][2]), 20, 50);
-        font.draw(Window, "Four deck ships left  " + (MaxShipCount[3] - ShipCount[Index][3]), 20, 30);
-
+        int shipsLeft = 0;
+        if(MaxShipCount[0] - ShipCount[Index][0] != 0)
+            font.draw(Window, "One deck ships left  " + (MaxShipCount[0] - ShipCount[Index][0]), 20, 90);
+        else shipsLeft += 20;
+        if(MaxShipCount[1] - ShipCount[Index][1] != 0)
+            font.draw(Window, "Two deck ships left  " + (MaxShipCount[1] - ShipCount[Index][1]), 20, 70 + shipsLeft);
+        else shipsLeft += 20;
+        if(MaxShipCount[2] - ShipCount[Index][2] != 0)
+            font.draw(Window, "Three deck ships left  " + (MaxShipCount[2] - ShipCount[Index][2]), 20, 50 + shipsLeft);
+        else shipsLeft += 20;
+        if(MaxShipCount[3] - ShipCount[Index][3] != 0)
+            font.draw(Window, "Four deck ships left  " + (MaxShipCount[3] - ShipCount[Index][3]), 20, 30 + shipsLeft);
+        else shipsLeft += 20;
     }
 
     public void renderGameplay(SpriteBatch Window, int Index) {
