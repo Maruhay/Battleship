@@ -1,6 +1,7 @@
 package com.pio.battleship;
-
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -29,6 +30,7 @@ public class Game {
         MaxShipCount = new int [MaxShipLength];
         ShipBegin = null;
         ShipEnd = null;
+
 
         for ( int i = 0; i < 2; i++ ) {
 
@@ -269,10 +271,9 @@ public class Game {
         boolean AllShipsPlaced = true;
 
         for ( int i = 0; i < MaxShipLength; i++ ) {
-
             if ( ShipCount[Index][i] != MaxShipCount[i] ) {
-
                 AllShipsPlaced = false;
+
 
                 break; } }
 
@@ -351,9 +352,15 @@ public class Game {
 
         Window.begin(); }
 
+
+
+
+
     public void renderShipChoice ( SpriteBatch Window, int Index ) {
 
         renderGrid( Window, 100, 100, 600, 600, Players[Index].getColor() );
+
+
 
         Board board = Players[Index].getBoard();
 
@@ -363,7 +370,9 @@ public class Game {
 
                 if( board.grid[x][y] > 0 ) {
 
-                    renderDot( Window, x, y, Players[Index].getColor(), 100, 100, 600, 600 ); } } }
+                    renderDot( Window, x, y, Players[Index].getColor(), 100, 100, 600, 600 );
+
+                } } }
 
         if ( ShipBegin != null ) {
 
@@ -392,6 +401,11 @@ public class Game {
                     it += Direction; } } }
 
         // TODO RENDER HOW MANY MORE SHIPS HAVE TO BE PLACED
+        BitmapFont font = new BitmapFont();
+        font.draw(Window, "One deck ships left  " + (MaxShipCount[0] - ShipCount[Index][0]), 20, 90);
+        font.draw(Window, "Two deck ships left  " + (MaxShipCount[1] - ShipCount[Index][1]), 20, 70);
+        font.draw(Window, "Three deck ships left  " + (MaxShipCount[2] - ShipCount[Index][2]), 20, 50);
+        font.draw(Window, "Four deck ships left  " + (MaxShipCount[3] - ShipCount[Index][3]), 20, 30);
 
         }
 
@@ -416,9 +430,11 @@ public class Game {
 
                         color = Color.RED; }
 
-                    renderDot( Window, x, y, color, 100, 100, 600, 600 ); } } }
+                    renderDot( Window, x, y, color, 100, 100, 600, 600 );
+                    } } }
 
         // TODO RENDER HOW MANY MORE SHIPS HAVE TO BE SUNK (LAST INDEX OF SHIP COUNT)
+
 
         }
 
