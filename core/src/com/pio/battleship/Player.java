@@ -20,8 +20,4 @@ public class Player {
 
         return board; }
 
-    public Coordinates update ( ) { // TODO WHAT IS IT ???
-
-        return null; }
-
     }

@@ -1,6 +1,5 @@
 package com.pio.battleship;
 
-import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -65,10 +64,10 @@ public class Game {
                 updateGameplay(MyEvent, 0);
                 break;
             case 4:
-                updateFinishScreen(MyEvent, 0);
+                updateFinishScreen(MyEvent, 1);
                 break;
             case 5:
-                updateFinishScreen(MyEvent, 1);
+                updateFinishScreen(MyEvent, 0);
                 break;
             case 6:
                 break;
@@ -96,10 +95,10 @@ public class Game {
                 updateGameplay(Time, 0);
                 break;
             case 4:
-                updateFinishScreen(Time, 0);
+                updateFinishScreen(Time, 1);
                 break;
             case 5:
-                updateFinishScreen(Time, 1);
+                updateFinishScreen(Time, 0);
                 break;
             case 6:
                 break;
@@ -335,9 +334,31 @@ public class Game {
 
     public void updateGameplay(Event MyEvent, int Index) {
 
-        // TODO THIS
-        // TODO DECREASE ShipCount[Index][MaxShipLength] ON HIT AND SUNK (3)
-        //
+        if (MyEvent.Type == Event.EventType.MouseKeyReleased) {
+
+            Coordinates MyCoordinates = getGridCoordinates(MyEvent.PositionX, MyEvent.PositionY, 100, 100, 600, 600);
+
+            if (MyCoordinates != null) {
+
+                int EnemyIndex = (Index == 0) ? 1 : 0;
+                int Result = Players[EnemyIndex].getBoard().pick( MyCoordinates );
+
+                if ( Result > 0 ) { // TODO TEST
+
+                    if ( State == 2 ) {
+
+                        State = 3; }
+
+                    else {
+
+                        State = 2; }
+
+                    if ( Result == 3 ) {
+
+                        ShipCount[EnemyIndex][MaxShipLength]--; } }
+
+                } }
+
     }
 
     public void updateFinishScreen(Event MyEvent, int Index) {
@@ -372,9 +393,7 @@ public class Game {
 
     public void updateGameplay(float Time, int Index) {
 
-        int EnemyIndex = (Index == 0) ? 1 : 0;
-
-        if (Players[EnemyIndex].getBoard().areAllShipsSunk()) {
+        if (Players[Index].getBoard().areAllShipsSunk()) {
 
             State = 4 + Index;
 
