@@ -7,67 +7,67 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Game {
 
-    private int State;
-    private Player[] Players;
-    private int MaxShipLength;
-    private int[][] ShipCount;
-    private int[] MaxShipCount;
-    private Coordinates ShipBegin;
-    private Coordinates ShipEnd;
+    private int state;
+    private Player[] players;
+    private int maxShipLength;
+    private int[][] shipCount;
+    private int[] maxShipCount;
+    private Coordinates shipBegin;
+    private Coordinates shipEnd;
 
     Game() {
 
-        State = 0;
-        Players = new Player[2];
-        Players[0] = new Player(Color.GREEN);
-        Players[1] = new Player(Color.BLUE);
-        MaxShipLength = 4;
-        ShipCount = new int[2][];
-        ShipCount[0] = new int[MaxShipLength + 1];
-        ShipCount[1] = new int[MaxShipLength + 1];
-        ShipCount[0][MaxShipLength] = 0;
-        ShipCount[1][MaxShipLength] = 0;
-        MaxShipCount = new int[MaxShipLength];
-        ShipBegin = null;
-        ShipEnd = null;
+        state = 0;
+        players = new Player[2];
+        players[0] = new Player(Color.GREEN);
+        players[1] = new Player(Color.BLUE);
+        maxShipLength = 4;
+        shipCount = new int[2][];
+        shipCount[0] = new int[maxShipLength + 1];
+        shipCount[1] = new int[maxShipLength + 1];
+        shipCount[0][maxShipLength] = 0;
+        shipCount[1][maxShipLength] = 0;
+        maxShipCount = new int[maxShipLength];
+        shipBegin = null;
+        shipEnd = null;
 
 
         for (int i = 0; i < 2; i++) {
 
-            for (int j = 0; j < MaxShipLength; j++) {
+            for (int j = 0; j < maxShipLength; j++) {
 
-                ShipCount[i][j] = 0;
-                MaxShipCount[j] = 0;
+                shipCount[i][j] = 0;
+                maxShipCount[j] = 0;
             }
         }
 
-        MaxShipCount[0] = 1;
-        MaxShipCount[1] = 1;
-        MaxShipCount[2] = 1;
-        MaxShipCount[3] = 1;
+        maxShipCount[0] = 1;
+        maxShipCount[1] = 1;
+        maxShipCount[2] = 1;
+        maxShipCount[3] = 1;
     }
 
-    public void process(Event MyEvent) {
+    public void process(Event myEvent) {
 
-        switch (State) {
+        switch (state) {
 
             case 0:
-                updateShipChoice(MyEvent, 0);
+                updateShipChoice(myEvent, 0);
                 break;
             case 1:
-                updateShipChoice(MyEvent, 1);
+                updateShipChoice(myEvent, 1);
                 break;
             case 2:
-                updateGameplay(MyEvent, 1);
+                updateGameplay(myEvent, 1);
                 break;
             case 3:
-                updateGameplay(MyEvent, 0);
+                updateGameplay(myEvent, 0);
                 break;
             case 4:
-                updateFinishScreen(MyEvent, 1);
+                updateFinishScreen(myEvent, 1);
                 break;
             case 5:
-                updateFinishScreen(MyEvent, 0);
+                updateFinishScreen(myEvent, 0);
                 break;
             case 6:
                 break;
@@ -78,27 +78,27 @@ public class Game {
         }
     }
 
-    public void process(float Time) {
+    public void process(float time) {
 
-        switch (State) {
+        switch (state) {
 
             case 0:
-                updateShipChoice(Time, 0);
+                updateShipChoice(time, 0);
                 break;
             case 1:
-                updateShipChoice(Time, 1);
+                updateShipChoice(time, 1);
                 break;
             case 2:
-                updateGameplay(Time, 1);
+                updateGameplay(time, 1);
                 break;
             case 3:
-                updateGameplay(Time, 0);
+                updateGameplay(time, 0);
                 break;
             case 4:
-                updateFinishScreen(Time, 1);
+                updateFinishScreen(time, 1);
                 break;
             case 5:
-                updateFinishScreen(Time, 0);
+                updateFinishScreen(time, 0);
                 break;
             case 6:
                 break;
@@ -109,29 +109,29 @@ public class Game {
         }
     }
 
-    public void render(SpriteBatch Window) {
+    public void render(SpriteBatch window) {
 
-        Window.begin();
+        window.begin();
 
-        switch (State) {
+        switch (state) {
 
             case 0:
-                renderShipChoice(Window, 0);
+                renderShipChoice(window, 0);
                 break;
             case 1:
-                renderShipChoice(Window, 1);
+                renderShipChoice(window, 1);
                 break;
             case 2:
-                renderGameplay(Window, 1);
+                renderGameplay(window, 1);
                 break;
             case 3:
-                renderGameplay(Window, 0);
+                renderGameplay(window, 0);
                 break;
             case 4:
-                renderFinishScreen(Window, 1);
+                renderFinishScreen(window, 1);
                 break;
             case 5:
-                renderFinishScreen(Window, 0);
+                renderFinishScreen(window, 0);
                 break;
             case 6:
                 break;
@@ -141,77 +141,77 @@ public class Game {
                 break;
         }
 
-        Window.end();
+        window.end();
     }
 
     public boolean isFinished() {
 
-        return State > 5;
+        return state > 5;
     }
 
-    public Coordinates getGridCoordinates(int MouseX, int MouseY, int GridX, int GridY, int GridWidth, int GridHeight) {
+    public Coordinates getGridCoordinates(int mouseX, int mouseY, int gridX, int gridY, int gridWidth, int gridHeight) {
 
-        int FieldCount = 10;
-        Coordinates MyCoordinates = new Coordinates();
+        int fieldCount = 10;
+        Coordinates myCoordinates = new Coordinates();
 
-        if (MouseX < GridX || MouseY < GridY) {
-
-            return null;
-        }
-
-        MyCoordinates.setX(FieldCount * (MouseX - GridX) / GridWidth);
-        MyCoordinates.setY(FieldCount * (MouseY - GridY) / GridHeight);
-
-        if (MyCoordinates.getX() > 9) {
+        if (mouseX < gridX || mouseY < gridY) {
 
             return null;
         }
 
-        if (MyCoordinates.getY() > 9) {
+        myCoordinates.setX(fieldCount * (mouseX - gridX) / gridWidth);
+        myCoordinates.setY(fieldCount * (mouseY - gridY) / gridHeight);
+
+        if (myCoordinates.getX() > 9) {
 
             return null;
         }
 
-        return MyCoordinates;
+        if (myCoordinates.getY() > 9) {
+
+            return null;
+        }
+
+        return myCoordinates;
     }
 
-    public void updateShipChoice(Event MyEvent, int Index) {
+    public void updateShipChoice(Event myEvent, int index) {
 
-        if (MyEvent.Type == Event.EventType.MouseKeyReleased) {
+        if (myEvent.Type == Event.EventType.MouseKeyReleased) {
 
-            Coordinates MyCoordinates = getGridCoordinates(MyEvent.PositionX, MyEvent.PositionY, 100, 100, 600, 600);
+            Coordinates myCoordinates = getGridCoordinates(myEvent.PositionX, myEvent.PositionY, 100, 100, 600, 600);
 
-            if (MyCoordinates != null) {
+            if (myCoordinates != null) {
 
-                if (ShipBegin == null) {
+                if (shipBegin == null) {
 
-                    ShipBegin = MyCoordinates;
-                    ShipEnd = new Coordinates();
+                    shipBegin = myCoordinates;
+                    shipEnd = new Coordinates();
 
-                    ShipEnd.setX(ShipBegin.getX());
-                    ShipEnd.setY(ShipBegin.getY());
+                    shipEnd.setX(shipBegin.getX());
+                    shipEnd.setY(shipBegin.getY());
                 } else {
 
                     boolean allowed = true;
                     int length = 1;
 
                     Coordinates coordinates = new Coordinates();
-                    coordinates.setX(ShipBegin.getX());
-                    coordinates.setY(ShipBegin.getY());
+                    coordinates.setX(shipBegin.getX());
+                    coordinates.setY(shipBegin.getY());
 
-                    if (Players[Index].getBoard().pick(coordinates, true) == 1) {
+                    if (players[index].getBoard().pick(coordinates, true) == 1) {
 
-                        if (ShipEnd.getY() == ShipBegin.getY()) {
+                        if (shipEnd.getY() == shipBegin.getY()) {
 
-                            int Direction = Math.min(Math.max(ShipBegin.getX() - ShipEnd.getX(), -1), 1);
-                            int it = ShipEnd.getX();
+                            int direction = Math.min(Math.max(shipBegin.getX() - shipEnd.getX(), -1), 1);
+                            int it = shipEnd.getX();
 
-                            while (it != ShipBegin.getX()) {
+                            while (it != shipBegin.getX()) {
 
                                 coordinates.setX(it);
-                                coordinates.setY(ShipBegin.getY());
+                                coordinates.setY(shipBegin.getY());
 
-                                if (Players[Index].getBoard().pick(coordinates, true) != 1) {
+                                if (players[index].getBoard().pick(coordinates, true) != 1) {
 
                                     allowed = false;
 
@@ -219,19 +219,19 @@ public class Game {
                                 }
 
                                 length++;
-                                it += Direction;
+                                it += direction;
                             }
-                        } else if (ShipEnd.getX() == ShipBegin.getX()) {
+                        } else if (shipEnd.getX() == shipBegin.getX()) {
 
-                            int Direction = Math.min(Math.max(ShipBegin.getY() - ShipEnd.getY(), -1), 1);
-                            int it = ShipEnd.getY();
+                            int direction = Math.min(Math.max(shipBegin.getY() - shipEnd.getY(), -1), 1);
+                            int it = shipEnd.getY();
 
-                            while (it != ShipBegin.getY()) {
+                            while (it != shipBegin.getY()) {
 
-                                coordinates.setX(ShipBegin.getX());
+                                coordinates.setX(shipBegin.getX());
                                 coordinates.setY(it);
 
-                                if (Players[Index].getBoard().pick(coordinates, true) != 1) {
+                                if (players[index].getBoard().pick(coordinates, true) != 1) {
 
                                     allowed = false;
 
@@ -239,7 +239,7 @@ public class Game {
                                 }
 
                                 length++;
-                                it += Direction;
+                                it += direction;
                             }
                         } else {
 
@@ -250,36 +250,36 @@ public class Game {
                         allowed = false;
                     }
 
-                    if (length > MaxShipLength) {
+                    if (length > maxShipLength) {
 
                         allowed = false;
-                    } else if (ShipCount[Index][length - 1] == MaxShipCount[length - 1]) {
+                    } else if (shipCount[index][length - 1] == maxShipCount[length - 1]) {
 
                         allowed = false;
                     }
 
                     if (allowed) {
 
-                        Board board = Players[Index].getBoard();
+                        Board board = players[index].getBoard();
 
-                        if (ShipEnd.getY() == ShipBegin.getY()) {
+                        if (shipEnd.getY() == shipBegin.getY()) {
 
-                            int Direction = Math.min(Math.max(ShipBegin.getX() - ShipEnd.getX(), -1), 1);
+                            int direction = Math.min(Math.max(shipBegin.getX() - shipEnd.getX(), -1), 1);
 
                             for (int i = 0; i < length; i++) {
 
-                                coordinates.setX(ShipEnd.getX() + Direction * i);
-                                coordinates.setY(ShipEnd.getY());
+                                coordinates.setX(shipEnd.getX() + direction * i);
+                                coordinates.setY(shipEnd.getY());
                                 board.pick(coordinates);
                             }
-                        } else if (ShipEnd.getX() == ShipBegin.getX()) {
+                        } else if (shipEnd.getX() == shipBegin.getX()) {
 
-                            int Direction = Math.min(Math.max(ShipBegin.getY() - ShipEnd.getY(), -1), 1);
+                            int direction = Math.min(Math.max(shipBegin.getY() - shipEnd.getY(), -1), 1);
 
                             for (int i = 0; i < length; i++) {
 
-                                coordinates.setX(ShipEnd.getX());
-                                coordinates.setY(ShipEnd.getY() + Direction * i);
+                                coordinates.setX(shipEnd.getX());
+                                coordinates.setY(shipEnd.getY() + direction * i);
                                 board.pick(coordinates);
                             }
                         }
@@ -307,168 +307,168 @@ public class Game {
                                 break;
                         }
 
-                        ship = factory.getShip(ShipBegin, ShipEnd, Players[Index].getColor());
-                        Players[Index].getBoard().addShip(ship);
-                        ShipCount[Index][length - 1]++;
-                        ShipCount[Index][MaxShipLength]++;
+                        ship = factory.getShip(shipBegin, shipEnd, players[index].getColor());
+                        players[index].getBoard().addShip(ship);
+                        shipCount[index][length - 1]++;
+                        shipCount[index][maxShipLength]++;
                     }
 
-                    ShipBegin = null;
-                    ShipEnd = null;
+                    shipBegin = null;
+                    shipEnd = null;
                 }
             }
-        } else if (MyEvent.Type == Event.EventType.MouseMoved) {
+        } else if (myEvent.Type == Event.EventType.MouseMoved) {
 
-            Coordinates MyCoordinates = getGridCoordinates(MyEvent.PositionX, MyEvent.PositionY, 100, 100, 600, 600);
+            Coordinates myCoordinates = getGridCoordinates(myEvent.PositionX, myEvent.PositionY, 100, 100, 600, 600);
 
-            if (ShipBegin != null && ShipEnd != null) {
+            if (shipBegin != null && shipEnd != null) {
 
-                if (MyCoordinates != null) {
+                if (myCoordinates != null) {
 
-                    ShipEnd.setX(MyCoordinates.getX());
-                    ShipEnd.setY(MyCoordinates.getY());
+                    shipEnd.setX(myCoordinates.getX());
+                    shipEnd.setY(myCoordinates.getY());
                 }
             }
         }
     }
 
-    public void updateGameplay(Event MyEvent, int Index) {
+    public void updateGameplay(Event myEvent, int index) {
 
-        if (MyEvent.Type == Event.EventType.MouseKeyReleased) {
+        if (myEvent.Type == Event.EventType.MouseKeyReleased) {
 
-            Coordinates MyCoordinates = getGridCoordinates(MyEvent.PositionX, MyEvent.PositionY, 100, 100, 600, 600);
+            Coordinates myCoordinates = getGridCoordinates(myEvent.PositionX, myEvent.PositionY, 100, 100, 600, 600);
 
-            if (MyCoordinates != null) {
+            if (myCoordinates != null) {
 
-                int EnemyIndex = (Index == 0) ? 1 : 0;
-                int Result = Players[EnemyIndex].getBoard().pick( MyCoordinates );
+                int enemyIndex = (index == 0) ? 1 : 0;
+                int result = players[enemyIndex].getBoard().pick( myCoordinates );
 
-                if ( Result > 0 ) { // TODO TEST
+                if ( result > 0 ) { // TODO TEST
 
-                    if ( State == 2 ) {
+                    if ( state == 2 ) {
 
-                        State = 3; }
+                        state = 3; }
 
                     else {
 
-                        State = 2; }
+                        state = 2; }
 
-                    if ( Result == 3 ) {
+                    if ( result == 3 ) {
 
-                        ShipCount[EnemyIndex][MaxShipLength]--; } }
+                        shipCount[enemyIndex][maxShipLength]--; } }
 
                 } }
 
     }
 
-    public void updateFinishScreen(Event MyEvent, int Index) {
+    public void updateFinishScreen(Event myEvent, int index) {
 
         // TODO THIS
         // TODO THIS 2
-        // TODO CLOSE ON ANY KEY (State=6)
+        // TODO CLOSE ON ANY KEY (state=6)
 
     }
 
-    public void updateShipChoice(float Time, int Index) {
+    public void updateShipChoice(float time, int index) {
 
-        boolean AllShipsPlaced = true;
+        boolean allShipsPlaced = true;
 
-        for (int i = 0; i < MaxShipLength; i++) {
-            if (ShipCount[Index][i] != MaxShipCount[i]) {
-                AllShipsPlaced = false;
+        for (int i = 0; i < maxShipLength; i++) {
+            if (shipCount[index][i] != maxShipCount[i]) {
+                allShipsPlaced = false;
 
 
                 break;
             }
         }
 
-        if (AllShipsPlaced) {
+        if (allShipsPlaced) {
 
-            Players[Index].getBoard().clear();
-            State++;
-
-            return;
-        }
-    }
-
-    public void updateGameplay(float Time, int Index) {
-
-        if (Players[Index].getBoard().areAllShipsSunk()) {
-
-            State = 4 + Index;
+            players[index].getBoard().clear();
+            state++;
 
             return;
         }
     }
 
-    public void updateFinishScreen(float Time, int Index) {
+    public void updateGameplay(float time, int index) {
+
+        if (players[index].getBoard().areAllShipsSunk()) {
+
+            state = 4 + index;
+
+            return;
+        }
+    }
+
+    public void updateFinishScreen(float time, int index) {
 
         // TODO I GUESS NOTHING ?
         // ?
     }
 
-    public void renderGrid(SpriteBatch Window, int PositionX, int PositionY, int Width, int Height, Color color) {
+    public void renderGrid(SpriteBatch window, int positionX, int positionY, int width, int height, Color color) {
 
-        Window.end();
+        window.end();
 
-        ShapeRenderer MyShapeRenderer = new ShapeRenderer();
-        MyShapeRenderer.setProjectionMatrix(Window.getProjectionMatrix());
+        ShapeRenderer myShapeRenderer = new ShapeRenderer();
+        myShapeRenderer.setProjectionMatrix(window.getProjectionMatrix());
 
-        int FieldCount = 10;
-        int LineThickness = 3;
-        int FieldWidth = (Width - LineThickness * FieldCount) / FieldCount;
-        int FieldHeight = (Height - LineThickness * FieldCount) / FieldCount;
+        int fieldCount = 10;
+        int lineThickness = 3;
+        int fieldWidth = (width - lineThickness * fieldCount) / fieldCount;
+        int fieldHeight = (height - lineThickness * fieldCount) / fieldCount;
 
-        for (int i = 0; i <= FieldCount; i++) {
+        for (int i = 0; i <= fieldCount; i++) {
 
-            int Vy = PositionY + (LineThickness + FieldHeight) * i;
-            int Hx = PositionX + (LineThickness + FieldWidth) * i;
+            int vy = positionY + (lineThickness + fieldHeight) * i;
+            int hx = positionX + (lineThickness + fieldWidth) * i;
 
-            MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            MyShapeRenderer.setColor(color);
-            MyShapeRenderer.rect(PositionX, Vy, Width + LineThickness, LineThickness);
-            MyShapeRenderer.end();
+            myShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            myShapeRenderer.setColor(color);
+            myShapeRenderer.rect(positionX, vy, width + lineThickness, lineThickness);
+            myShapeRenderer.end();
 
-            MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            MyShapeRenderer.setColor(color);
-            MyShapeRenderer.rect(Hx, PositionY, LineThickness, Height + LineThickness);
-            MyShapeRenderer.end();
+            myShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            myShapeRenderer.setColor(color);
+            myShapeRenderer.rect(hx, positionY, lineThickness, height + lineThickness);
+            myShapeRenderer.end();
         }
 
-        Window.begin();
+        window.begin();
     }
 
-    public void renderDot(SpriteBatch Window, int PositionX, int PositionY, Color color, int GridX, int GridY, int GridWidth, int GridHeight) {
+    public void renderDot(SpriteBatch window, int positionX, int positionY, Color color, int gridX, int gridY, int gridWidth, int gridHeight) {
 
-        Window.end();
+        window.end();
 
-        ShapeRenderer MyShapeRenderer = new ShapeRenderer();
-        MyShapeRenderer.setProjectionMatrix(Window.getProjectionMatrix());
+        ShapeRenderer myShapeRenderer = new ShapeRenderer();
+        myShapeRenderer.setProjectionMatrix(window.getProjectionMatrix());
 
-        int FieldCount = 10;
-        int LineThickness = 3;
-        int FieldWidth = (GridWidth - LineThickness * FieldCount) / FieldCount;
-        int FieldHeight = (GridHeight - LineThickness * FieldCount) / FieldCount; ;
-        int DotRadius = (int) (0.25f * Math.min(FieldWidth, FieldHeight));
-        PositionY = Math.abs(9 - PositionY);
+        int fieldCount = 10;
+        int lineThickness = 3;
+        int fieldWidth = (gridWidth - lineThickness * fieldCount) / fieldCount;
+        int fieldHeight = (gridHeight - lineThickness * fieldCount) / fieldCount; ;
+        int dotRadius = (int) (0.25f * Math.min(fieldWidth, fieldHeight));
+        positionY = Math.abs(9 - positionY);
 
-        MyShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        MyShapeRenderer.setColor(color);
-        MyShapeRenderer.circle(GridX + LineThickness + (LineThickness + FieldWidth) * PositionX + FieldWidth / 2,
-                GridY + LineThickness + (LineThickness + FieldWidth) * PositionY + FieldHeight / 2,
-                DotRadius);
-        MyShapeRenderer.end();
+        myShapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        myShapeRenderer.setColor(color);
+        myShapeRenderer.circle(gridX + lineThickness + (lineThickness + fieldWidth) * positionX + fieldWidth / 2,
+                gridY + lineThickness + (lineThickness + fieldWidth) * positionY + fieldHeight / 2,
+                dotRadius);
+        myShapeRenderer.end();
 
-        Window.begin();
+        window.begin();
     }
 
 
-    public void renderShipChoice(SpriteBatch Window, int Index) {
+    public void renderShipChoice(SpriteBatch window, int index) {
 
-        renderGrid(Window, 100, 100, 600, 600, Players[Index].getColor());
+        renderGrid(window, 100, 100, 600, 600, players[index].getColor());
 
 
-        Board board = Players[Index].getBoard();
+        Board board = players[index].getBoard();
 
         for (int x = 0; x < 10; x++) {
 
@@ -476,65 +476,65 @@ public class Game {
 
                 if (board.grid[x][y] > 0) {
 
-                    renderDot(Window, x, y, Players[Index].getColor(), 100, 100, 600, 600);
+                    renderDot(window, x, y, players[index].getColor(), 100, 100, 600, 600);
 
                 }
             }
         }
 
-        if (ShipBegin != null) {
+        if (shipBegin != null) {
 
-            renderDot(Window, ShipBegin.getX(), ShipBegin.getY(), Color.WHITE, 100, 100, 600, 600);
+            renderDot(window, shipBegin.getX(), shipBegin.getY(), Color.WHITE, 100, 100, 600, 600);
 
-            if (ShipEnd.getY() == ShipBegin.getY()) {
+            if (shipEnd.getY() == shipBegin.getY()) {
 
-                int Direction = Math.min(Math.max(ShipBegin.getX() - ShipEnd.getX(), -1), 1);
-                int it = ShipEnd.getX();
+                int direction = Math.min(Math.max(shipBegin.getX() - shipEnd.getX(), -1), 1);
+                int it = shipEnd.getX();
 
-                while (it != ShipBegin.getX()) {
+                while (it != shipBegin.getX()) {
 
-                    renderDot(Window, it, ShipBegin.getY(), Color.WHITE, 100, 100, 600, 600);
+                    renderDot(window, it, shipBegin.getY(), Color.WHITE, 100, 100, 600, 600);
 
-                    it += Direction;
+                    it += direction;
                 }
-            } else if (ShipEnd.getX() == ShipBegin.getX()) {
+            } else if (shipEnd.getX() == shipBegin.getX()) {
 
-                int Direction = Math.min(Math.max(ShipBegin.getY() - ShipEnd.getY(), -1), 1);
-                int it = ShipEnd.getY();
+                int direction = Math.min(Math.max(shipBegin.getY() - shipEnd.getY(), -1), 1);
+                int it = shipEnd.getY();
 
-                while (it != ShipBegin.getY()) {
+                while (it != shipBegin.getY()) {
 
-                    renderDot(Window, ShipBegin.getX(), it, Color.WHITE, 100, 100, 600, 600);
+                    renderDot(window, shipBegin.getX(), it, Color.WHITE, 100, 100, 600, 600);
 
-                    it += Direction;
+                    it += direction;
                 }
             }
         }
 
         BitmapFont font = new BitmapFont();
         int shipsLeft = 0;
-        if(MaxShipCount[0] - ShipCount[Index][0] != 0)
-            font.draw(Window, "One deck ships left  " + (MaxShipCount[0] - ShipCount[Index][0]), 20, 90);
+        if(maxShipCount[0] - shipCount[index][0] != 0)
+            font.draw(window, "One deck ships left  " + (maxShipCount[0] - shipCount[index][0]), 20, 90);
         else shipsLeft += 20;
-        if(MaxShipCount[1] - ShipCount[Index][1] != 0)
-            font.draw(Window, "Two deck ships left  " + (MaxShipCount[1] - ShipCount[Index][1]), 20, 70 + shipsLeft);
+        if(maxShipCount[1] - shipCount[index][1] != 0)
+            font.draw(window, "Two deck ships left  " + (maxShipCount[1] - shipCount[index][1]), 20, 70 + shipsLeft);
         else shipsLeft += 20;
-        if(MaxShipCount[2] - ShipCount[Index][2] != 0)
-            font.draw(Window, "Three deck ships left  " + (MaxShipCount[2] - ShipCount[Index][2]), 20, 50 + shipsLeft);
+        if(maxShipCount[2] - shipCount[index][2] != 0)
+            font.draw(window, "Three deck ships left  " + (maxShipCount[2] - shipCount[index][2]), 20, 50 + shipsLeft);
         else shipsLeft += 20;
-        if(MaxShipCount[3] - ShipCount[Index][3] != 0)
-            font.draw(Window, "Four deck ships left  " + (MaxShipCount[3] - ShipCount[Index][3]), 20, 30 + shipsLeft);
+        if(maxShipCount[3] - shipCount[index][3] != 0)
+            font.draw(window, "Four deck ships left  " + (maxShipCount[3] - shipCount[index][3]), 20, 30 + shipsLeft);
         else shipsLeft += 20;
     }
 
-    public void renderGameplay(SpriteBatch Window, int Index) {
+    public void renderGameplay(SpriteBatch window, int index) {
 
-        int EnemyIndex = (Index == 0) ? 1 : 0;
-        Board board = Players[EnemyIndex].getBoard();
+        int enemyIndex = (index == 0) ? 1 : 0;
+        Board board = players[enemyIndex].getBoard();
 
         // TODO RENDER INFORMATION IF HIT / HIT AND SUNK (INDEX INDEPENDENT)
 
-        renderGrid(Window, 100, 100, 600, 600, Players[EnemyIndex].getColor());
+        renderGrid(window, 100, 100, 600, 600, players[enemyIndex].getColor());
 
         for (int x = 0; x < 10; x++) {
 
@@ -542,14 +542,14 @@ public class Game {
 
                 if (board.grid[x][y] > 0) {
 
-                    Color color = Players[Index].getColor();
+                    Color color = players[index].getColor();
 
                     if (board.grid[x][y] > 1) {
 
                         color = Color.RED;
                     }
 
-                    renderDot(Window, x, y, color, 100, 100, 600, 600);
+                    renderDot(window, x, y, color, 100, 100, 600, 600);
                 }
             }
         }
@@ -559,9 +559,18 @@ public class Game {
 
     }
 
-    public void renderFinishScreen(SpriteBatch Window, int Index) {
+    public void renderFinishScreen(SpriteBatch window, int index) {
 
-        // TODO
+        // TODO MAKE IT PRETTY
+
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(2, 2);
+
+        if (index == 0)
+            font.draw(window, "Green wins!", 340, 400);
+        else
+            font.draw(window, "Blue wins!", 340, 400);
+
 
     }
 
