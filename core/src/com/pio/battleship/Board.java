@@ -1,12 +1,12 @@
 package com.pio.battleship;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class Board {
 
     private int width;
     private int height;
-    private LinkedList <Ship> ships;
+    private List<Ship> ships;
 
     // valid values:
     // 0 - not picked
@@ -25,7 +25,7 @@ public class Board {
 
             clear(); }
 
-        ships = new LinkedList <Ship> ( ); }
+        ships = new ArrayList<>(); }
 
     public void clear ( ) {
 
@@ -76,6 +76,8 @@ public class Board {
         ships.add( ship ); }
 
     public boolean areAllShipsSunk ( ){
+
+        // TODO return ships.stream().noneMatch(s -> s.isSunk());
 
         for ( Ship ship : ships ) {
 
