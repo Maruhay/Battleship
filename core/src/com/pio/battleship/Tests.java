@@ -213,7 +213,7 @@ public class Tests {
     public void gameGetGridCoordinates ( ) {
 
         Game myGame = new Game();
-
+    // comment
         Coordinates myCoordinatesA = myGame.getGridCoordinates(50,150,100,100,600,600);
         Coordinates myCoordinatesB = myGame.getGridCoordinates(150,50,100,100,600,600);
         Coordinates myCoordinatesC = myGame.getGridCoordinates(750,150,100,100,600,600);
@@ -249,7 +249,7 @@ public class Tests {
 
     @Test
     public void playerGetBoard ( ) {
-
+        //comment
         Player myPlayer = new Player(Color.RED);
         assertNotNull(myPlayer.getBoard());
 
