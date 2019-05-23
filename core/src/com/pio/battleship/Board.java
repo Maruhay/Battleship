@@ -6,7 +6,7 @@ public class Board {
 
     private int width;
     private int height;
-    private List<Ship> ships;
+    private List <Ship> ships;
 
     // valid values:
     // 0 - not picked
@@ -77,14 +77,18 @@ public class Board {
 
     public boolean areAllShipsSunk ( ){
 
-        // TODO return ships.stream().noneMatch(s -> s.isSunk());
+        return ships.stream().allMatch(Ship::isSunk);
 
+        /*
         for ( Ship ship : ships ) {
 
             if ( !ship.isSunk() ) {
 
                 return false; } }
 
-        return true; }
+        return true;
+        */
+
+        }
 
     }
