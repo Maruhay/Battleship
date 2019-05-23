@@ -9,10 +9,76 @@ public class Tests {
     @Test
     public void aircraftCarrierPick ( ) {
 
+        Coordinates [] myCoordinatesA = new Coordinates[4];
+        myCoordinatesA[0] = new Coordinates();
+        myCoordinatesA[1] = new Coordinates();
+        myCoordinatesA[2] = new Coordinates();
+        myCoordinatesA[3] = new Coordinates();
+
+        myCoordinatesA[0].setX(4);
+        myCoordinatesA[0].setY(8);
+        myCoordinatesA[1].setX(5);
+        myCoordinatesA[1].setY(8);
+        myCoordinatesA[2].setX(6);
+        myCoordinatesA[2].setY(8);
+        myCoordinatesA[3].setX(7);
+        myCoordinatesA[3].setY(8);
+
+        AircraftCarrier myAircraftCarrier = new AircraftCarrier(myCoordinatesA,Color.RED);
+        Coordinates myCoordinatesB = new Coordinates();
+
+        myCoordinatesB.setX(7);
+        myCoordinatesB.setY(3);
+        assertEquals(myAircraftCarrier.pick(myCoordinatesB,false),1);
+
+        myCoordinatesB.setX(6);
+        myCoordinatesB.setY(8);
+        assertEquals(myAircraftCarrier.pick(myCoordinatesB,false),2);
+
+        myCoordinatesB.setX(4);
+        myCoordinatesB.setY(8);
+        assertEquals(myAircraftCarrier.pick(myCoordinatesB,false),2);
+
+        myCoordinatesB.setX(7);
+        myCoordinatesB.setY(8);
+        assertEquals(myAircraftCarrier.pick(myCoordinatesB,false),2);
+
+        myCoordinatesB.setX(5);
+        myCoordinatesB.setY(8);
+        assertEquals(myAircraftCarrier.pick(myCoordinatesB,true),2);
+
+        myCoordinatesB.setX(5);
+        myCoordinatesB.setY(8);
+        assertEquals(myAircraftCarrier.pick(myCoordinatesB,false),3);
+
         }
 
     @Test
     public void boardAreAllShipsSunk ( ) {
+
+        Board myBoard = new Board(10,10);
+
+        Coordinates myCoordinatesA = new Coordinates();
+        myCoordinatesA.setX(6);
+        myCoordinatesA.setY(4);
+        myBoard.addShip(new SmallBoat(myCoordinatesA,Color.RED));
+
+        Coordinates myCoordinatesB = new Coordinates();
+        myCoordinatesB.setX(3);
+        myCoordinatesB.setY(7);
+        myBoard.addShip(new SmallBoat(myCoordinatesB,Color.RED));
+        assertFalse(myBoard.areAllShipsSunk());
+
+        Coordinates myCoordinatesC = new Coordinates();
+        myCoordinatesC.setX(6);
+        myCoordinatesC.setY(4);
+        myBoard.pick(myCoordinatesC);
+        assertFalse(myBoard.areAllShipsSunk());
+
+        myCoordinatesC.setX(3);
+        myCoordinatesC.setY(7);
+        myBoard.pick(myCoordinatesC);
+        assertTrue(myBoard.areAllShipsSunk());
 
         }
 
