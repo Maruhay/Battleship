@@ -343,7 +343,7 @@ public class Game {
                 int enemyIndex = (index == 0) ? 1 : 0;
                 int result = players[enemyIndex].getBoard().pick( myCoordinates );
 
-                if ( result > 0 ) { // TODO TEST
+                if ( result > 0 ) {
 
                     if ( state == 2 ) {
 
@@ -363,11 +363,9 @@ public class Game {
 
     public void updateFinishScreen(Event myEvent, int index) {
 
-        // TODO THIS
-        // TODO THIS 2
-        // TODO CLOSE ON ANY KEY (state=6)
+        // EMPTY
 
-    }
+        }
 
     public void updateShipChoice(float time, int index) {
 
@@ -403,8 +401,7 @@ public class Game {
 
     public void updateFinishScreen(float time, int index) {
 
-        // TODO I GUESS NOTHING ?
-        // ?
+        // EMPTY
     }
 
     public void renderGrid(SpriteBatch window, int positionX, int positionY, int width, int height, Color color) {
@@ -532,8 +529,6 @@ public class Game {
         int enemyIndex = (index == 0) ? 1 : 0;
         Board board = players[enemyIndex].getBoard();
 
-        // TODO RENDER INFORMATION IF HIT / HIT AND SUNK (INDEX INDEPENDENT)
-
         renderGrid(window, 100, 100, 600, 600, players[enemyIndex].getColor());
 
         for (int x = 0; x < 10; x++) {
@@ -554,14 +549,9 @@ public class Game {
             }
         }
 
-        // TODO RENDER HOW MANY MORE SHIPS HAVE TO BE SUNK (LAST INDEX OF SHIP COUNT)
-
-
     }
 
     public void renderFinishScreen(SpriteBatch window, int index) {
-
-        // TODO MAKE IT PRETTY
 
         BitmapFont font = new BitmapFont();
         font.getData().setScale(2, 2);

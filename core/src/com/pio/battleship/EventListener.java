@@ -1,12 +1,13 @@
 package com.pio.battleship;
 
 import com.badlogic.gdx.InputProcessor;
-import java.util.LinkedList;
+
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class EventListener implements InputProcessor {
 
-    private Queue EventQueue = new LinkedList( ); // TODO ArrayDeque
+    private Queue EventQueue = new ArrayDeque( );
 
     public boolean isEventAvailable ( ) {
 

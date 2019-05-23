@@ -6,10 +6,10 @@ import static org.junit.Assert.*;
 public class ExampleTestClass {
 
     @Test
-    public void runExampleTest ( ) {
+    public void exampleTest ( ) {
 
-        String str = "JUnit is working fine";
-        assertEquals("JUnit is working fine",str);
+        String testString = "JUnit is working fine";
+        assertEquals("JUnit is working fine",testString);
 
         }
 
